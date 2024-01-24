@@ -234,6 +234,37 @@ Vue.component('MiddleColumn', {
     }
 })
 
+Vue.component('LargeColumn', {
+    template: `
+        <section id="main" class="main-alt">
+            <div class="column column_three">
+                <div class="Chart" v-for="Chart in LargeColumn">
+                <h3>{{ Chart.name }}</h3>
+                    <div class="tasks" v-for="task in Chart.points"
+                        v-if="task.name != null"
+                        @click="TaskCompleted(Chart, task)"
+                        :class="{completed: task.completed}">
+                        {{ task.name }}
+                    </div>
+                        <p>{{ Chart.date }}</p>
+                </div>
+            </div>
+        </section>
+    `,
+    props: {
+      LargeColumn: {
+            type: Array,
+        },
+        Chart: {
+            type: Object,
+        },
+    },
+    methods: {
+    }
+})
+
+
+
 let app = new Vue({
     el: '#app',
 })
