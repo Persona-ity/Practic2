@@ -192,6 +192,47 @@ Vue.component('SmallCollumn', {
     },
 })
 
+Vue.component('MiddleColumn', {
+    template: `
+        <section id="main" class="main-alt">
+            <div class="column column_two">
+                <div class="Chart" v-for="Chart in MiddleColumn">
+                <h3>{{ Chart.name }}</h3>
+                    <div class="tasks" v-for="task in Chart.points"
+                        v-if="task.name != null"
+                        @click="TaskCompleted(Chart, task)"
+                        :class="{completed: task.completed}">
+                        {{ task.name }}
+                    </div>
+                </div>
+            </div>
+        </section>
+    `,
+    props: {
+      MiddleColumn: {
+            type: Array,
+        },
+        Chart: {
+            type: Object,
+        },
+    },
+    methods: {
+        TaskCompleted(ColumnCard, task) {
+            JSON.parse(localStorage.getItem("MiddleColumn"))
+            task.completed = true
+            ColumnCard.status += 1
+            localStorage.setItem('MiddleColumn', JSON.stringify(this.MiddleColumn))
+            let count = 0
+            for(let i = 0; i < 5; i++){
+                count++
+            }
+            if (( ColumnCard.status / count) * 100 >= 100) {
+                eventBus.$emit('addLargeColumn', ColumnCard)
+                ColumnCard.date = new Date().toLocaleString()
+            }
+        }
+    }
+})
 
 let app = new Vue({
     el: '#app',
