@@ -1,9 +1,29 @@
 * {
     box-sizing: border-box;
-    /*font-family: Tahoma;*/
 }
 
 body {
     background: #292832;
+}
+
+.Todo {
+    float: left;
+    width: 33.33%;
+    padding: 10px;
+    height: auto;
+    background: #292832;
+    text-align: center;
+}
+
+.main_text {
+    font-size: 36px;
+    line-height: 40px;
+    text-align: center;
+    letter-spacing: 3px;
+}
+
+.Chart {
+    border: 1px solid #000000;
+    margin: 10px;
 }
 
