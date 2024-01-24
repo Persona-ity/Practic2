@@ -140,6 +140,59 @@ Vue.component('newCard', {
 
 })
 
+// Компонент "SmallCollumn" для отображения первой колонки
+Vue.component('SmallCollumn', {
+    template: `
+        <section id="main" class="main-alt">
+            <div class="column column_one">
+                <div class="Chart" v-for="Chart in SmallCollumn">
+                <h3>{{ Chart.name }}</h3>
+                    <div class="tasks" v-for="task in Chart.points"
+                    @click="TaskCompleted(Chart, task)"
+                        :class="{completed: task.completed}">
+                        {{ task.name }}
+                    </div>
+                </div>
+            </div>
+        </section>
+    `,
+    props: {
+      SmallCollumn: {
+            type: Array,
+        },
+        MiddleColumn: {
+            type: Array,
+        },
+        Chart: {
+            type: Object,
+        },
+        Mistakes: {
+            type: Array,
+        },
+    },
+    // Метод обработки завершения задачи в карточке
+    methods: {
+        TaskCompleted(ColumnCard, task) {
+            JSON.parse(localStorage.getItem("SmallCollumn"))
+            task.completed = true
+            ColumnCard.status += 1
+            localStorage.setItem('SmallCollumn', JSON.stringify(this.SmallCollumn))
+             if (ColumnCard.status === 3) {
+                eventBus.$emit('addMiddleColumn', ColumnCard)
+            }
+            else if (ColumnCard.status > 3){
+                ColumnCard.status = 0
+                this.SmallCollumn.forEach(items => {
+                        items.points.forEach(items => {
+                            items.completed = false;
+                        })
+                    })
+             }
+        },
+    },
+})
+
+
 let app = new Vue({
     el: '#app',
 })
