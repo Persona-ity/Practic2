@@ -15,6 +15,21 @@ body {
     text-align: center;
 }
 
+.main_text {
+    font-size: 36px;
+    line-height: 40px;
+    text-align: center;
+    letter-spacing: 3px;
+    color: #00ccff;
+}
+
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+    color: #00ccff;
+}
+
 .Chart {
     border: 1px solid #88ff00;
     margin: 10px;
@@ -52,3 +67,20 @@ body {
     margin-bottom: 25px;
 }
 
+.sub {
+    display: flex;
+    justify-content: center;
+}
+
+.sub input[type="submit"] {
+    width: 300px;
+    background: #88ff00;
+    height: 30px;
+    color: #00ccff;
+    border-radius: 10px;
+    font-size: 15px;
+}
+
+.completed{
+    text-decoration: line-through;
+}

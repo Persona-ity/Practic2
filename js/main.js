@@ -263,8 +263,6 @@ Vue.component('LargeColumn', {
     }
 })
 
-
-
 let app = new Vue({
     el: '#app',
 })
