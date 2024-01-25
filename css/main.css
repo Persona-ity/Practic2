@@ -3,8 +3,7 @@
 }
 
 body {
-    background: #206E7A;
-    color: #fcfcfc;
+    background: #292832;
 }
 
 .column {
@@ -12,47 +11,60 @@ body {
     width: 33.33%;
     padding: 10px;
     height: auto;
-    background: #206E7A;
+    background: #292832;
     text-align: center;
 }
 
-.Texting {
+.main_text {
     font-size: 36px;
     line-height: 40px;
     text-align: center;
     letter-spacing: 3px;
+    color: #00ccff;
 }
 
-.card {
-    border: 1px solid #000000;
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+    color: #00ccff;
+}
+
+.Chart {
+    border: 1px solid #88ff00;
     margin: 10px;
-    background-color: #2E8581;
+    color: #00ccff;
+}
+
+.form_control {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.form_control input[type="text"] {
+    color: #00ccff;
+    height: 40px;
+    width: 300px;
+    border: 1px solid #88ff00;
+    padding-left: 10px;
+    margin: 6px;
+    background: #292832;
 }
 
 .error {
     background-color: #292832;
     padding: 20px 30px;
-    color: #2E8581;
+    color: #7E41EA;
     font-size: 17px;
     font-weight: bold;
     line-height: 20px;
+    text-shadow: 1px 1px rgba(250,250,250,.3);
     text-align: center;
 }
 
-.NameForm {
+.form_name {
     margin-bottom: 25px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
 }
 
 .sub {
@@ -62,14 +74,13 @@ form {
 
 .sub input[type="submit"] {
     width: 300px;
-    background: #fcfcfc;
+    background: #88ff00;
     height: 30px;
+    color: #00ccff;
+    border-radius: 10px;
+    font-size: 15px;
 }
 
 .completed{
-    background-color: rgb(16, 121, 63);
-    width: 65%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    text-decoration: line-through;
 }
