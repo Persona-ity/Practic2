@@ -2,20 +2,21 @@ let eventBus = new Vue()
 
 Vue.component('Todo', {
     template: `
+ 
         <div class="columns">
             <newCard></newCard>
-            <p class="Mistake" v-for="Mistake in Mistakes">{{ Mistake }}</p>
-            <SmallCollumn :SmallCollumn="SmallCollumn"></SmallCollumn>
-            <MiddleColumn :MiddleColumn="MiddleColumn"></MiddleColumn>
-            <LargeColumn :LargeColumn="LargeColumn"></LargeColumn>
-         </div>
+        <p class="error" v-for="Mistake in Mistakes">{{ Mistake }}</p>
+                <SmallCollumn :SmallCollumn="SmallCollumn"></SmallCollumn>
+                <MiddleColumn :MiddleColumn="MiddleColumn"></MiddleColumn>
+                <LargeColumn :LargeColumn="LargeColumn"></LargeColumn>
+            </div>
     `,
     data() {
         return {
-         SmallCollumn: [],
-         MiddleColumn: [],
-         LargeColumn: [], 
-         Mistakes: [],
+            SmallCollumn: [],
+            MiddleColumn: [],
+            LargeColumn: [], 
+            Mistakes: [],
         }
     },
 
@@ -31,35 +32,33 @@ Vue.component('Todo', {
             this.LargeColumn = JSON.parse(localStorage.getItem("LargeColumn"))
         }
 
-        eventBus.$on('addSmallCollumn', ColumnCard => {
+        eventBus.$on('Addition_1', ColumnWithCards => {
 
             if (this.SmallCollumn.length < 3) {
                 this.Mistakes.length = 0
-                this.SmallCollumn.push(ColumnCard)
+                this.SmallCollumn.push(ColumnWithCards)
                 localStorage.setItem('SmallCollumn', JSON.stringify(this.SmallCollumn))
             } else {
                 this.Mistakes.length = 0
-                this.Mistakes.push('макс коллво заметок в 1 столбце')
+                this.Mistakes.push('Максимальное кол-во карточек в первом столбце')
             }
         })
-
-        // Слушатель события для добавления карточки во вторую колонку
-        eventBus.$on('addMiddleColumn', ColumnCard => {
+        eventBus.$on('addColumn_2', ColumnWithCards => {
             if (this.MiddleColumn.length < 5) {
                 this.Mistakes.length = 0
-                this.MiddleColumn.push(ColumnCard)
-                this.SmallCollumn.splice(this.SmallCollumn.indexOf(ColumnCard), 1)
+                this.MiddleColumn.push(ColumnWithCards)
+                this.SmallCollumn.splice(this.SmallCollumn.indexOf(ColumnWithCards), 1)
                 localStorage.setItem('SmallCollumn', JSON.stringify(this.SmallCollumn))
                 localStorage.setItem('MiddleColumn', JSON.stringify(this.MiddleColumn))
             } else {
                 this.Mistakes.length = 0
-                this.Mistakes.push('Вы не можете редактировать первую колонку, пока во второй есть 5 карточек.')
+                this.Mistakes.push('')
             }
         })
-        eventBus.$on('addLargeColumn', ColumnCard => {
+        eventBus.$on('addColumn_3', ColumnWithCards => {
             JSON.parse(localStorage.getItem('MiddleColumn'))
-            this.LargeColumn.push(ColumnCard)
-            this.MiddleColumn.splice(this.MiddleColumn.indexOf(ColumnCard), 1)
+            this.LargeColumn.push(ColumnWithCards)
+            this.MiddleColumn.splice(this.MiddleColumn.indexOf(ColumnWithCards), 1)
             localStorage.setItem('MiddleColumn', JSON.stringify(this.MiddleColumn))
             localStorage.setItem('LargeColumn', JSON.stringify(this.LargeColumn))
         })
@@ -69,30 +68,22 @@ Vue.component('Todo', {
 
 Vue.component('newCard', {
     template: `
-    <section id="main" class="main-alt">
-    
+    <section>
         <form class="row" @submit.prevent="Submit">
-        
-            <p class="main_text">Заметки</p>
-        <div class="form_control">
-                
-            <div class="form_name">
+            <p class="Texting">Заметки</p>
+        <div class='SomeOne'>  
+            <div class="NameForm">
                 <input required type="text" v-model="name" id="name" placeholder="Введите название заметки"/>
             </div>
-            
             <input required type="text"  v-model="point_1" placeholder="Первый пункт"/>
-
             <input required type="text"  v-model="point_2" placeholder="Второй пункт"/>
-
             <input required type="text"  v-model="point_3" placeholder="Третий пункт"/> 
-
             <input required type="text"  v-model="point_4"  placeholder="Четвертый пункт"/>
-
-             <input required type="text" v-model="point_5"  placeholder="Пятый пункт"/>
+            <input required type="text" v-model="point_5"  placeholder="Пятый пункт"/>
         </div>
         <div>                    
                 <p class="sub">
-                        <input type="submit" value="Отправить"> 
+                    <input type="submit" value="Отправить"> 
                 </p>
             </div>
         </form>
@@ -109,11 +100,10 @@ Vue.component('newCard', {
             date: null,
         }
     },
-    // Метод обработки отправки формы
     methods: {
 
         Submit() {
-            let Chart = {
+            let card = {
                 name: this.name,
                 points: [
                     {name: this.point_1, completed: false},
@@ -127,8 +117,7 @@ Vue.component('newCard', {
                 test: 0,
                 Mistakes: [],
             }
-            // Эмит события для добавления карточки в первую колонку
-            eventBus.$emit('addSmallCollumn', Chart)
+            eventBus.$emit('Addition_1', card)
             this.name = null;
             this.point_1 = null
             this.point_2 = null
@@ -140,15 +129,14 @@ Vue.component('newCard', {
 
 })
 
-// Компонент "SmallCollumn" для отображения первой колонки
 Vue.component('SmallCollumn', {
     template: `
         <section id="main" class="main-alt">
             <div class="column column_one">
-                <div class="Chart" v-for="Chart in SmallCollumn">
-                <h3>{{ Chart.name }}</h3>
-                    <div class="tasks" v-for="task in Chart.points"
-                    @click="TaskCompleted(Chart, task)"
+                <div class="card" v-for="card in SmallCollumn">
+                <h3>{{ card.name }}</h3>
+                    <div class="tasks" v-for="task in card.points"
+                    @click="TaskCompleted(card, task)"
                         :class="{completed: task.completed}">
                         {{ task.name }}
                     </div>
@@ -157,31 +145,30 @@ Vue.component('SmallCollumn', {
         </section>
     `,
     props: {
-      SmallCollumn: {
+        SmallCollumn: {
             type: Array,
         },
         MiddleColumn: {
             type: Array,
         },
-        Chart: {
+        card: {
             type: Object,
         },
         Mistakes: {
             type: Array,
         },
     },
-    // Метод обработки завершения задачи в карточке
     methods: {
-        TaskCompleted(ColumnCard, task) {
+        TaskCompleted(ColumnWithCards, task) {
             JSON.parse(localStorage.getItem("SmallCollumn"))
             task.completed = true
-            ColumnCard.status += 1
+            ColumnWithCards.status += 1
             localStorage.setItem('SmallCollumn', JSON.stringify(this.SmallCollumn))
-             if (ColumnCard.status === 3) {
-                eventBus.$emit('addMiddleColumn', ColumnCard)
+             if (ColumnWithCards.status === 3) {
+                eventBus.$emit('addColumn_2', ColumnWithCards)
             }
-            else if (ColumnCard.status > 3){
-                ColumnCard.status = 0
+            else if (ColumnWithCards.status > 3){
+                ColumnWithCards.status = 0
                 this.SmallCollumn.forEach(items => {
                         items.points.forEach(items => {
                             items.completed = false;
@@ -196,11 +183,11 @@ Vue.component('MiddleColumn', {
     template: `
         <section id="main" class="main-alt">
             <div class="column column_two">
-                <div class="Chart" v-for="Chart in MiddleColumn">
-                <h3>{{ Chart.name }}</h3>
-                    <div class="tasks" v-for="task in Chart.points"
+                <div class="card" v-for="card in MiddleColumn">
+                <h3>{{ card.name }}</h3>
+                    <div class="tasks" v-for="task in card.points"
                         v-if="task.name != null"
-                        @click="TaskCompleted(Chart, task)"
+                        @click="TaskCompleted(card, task)"
                         :class="{completed: task.completed}">
                         {{ task.name }}
                     </div>
@@ -209,26 +196,26 @@ Vue.component('MiddleColumn', {
         </section>
     `,
     props: {
-      MiddleColumn: {
+        MiddleColumn: {
             type: Array,
         },
-        Chart: {
+        card: {
             type: Object,
         },
     },
     methods: {
-        TaskCompleted(ColumnCard, task) {
+        TaskCompleted(ColumnWithCards, task) {
             JSON.parse(localStorage.getItem("MiddleColumn"))
             task.completed = true
-            ColumnCard.status += 1
+            ColumnWithCards.status += 1
             localStorage.setItem('MiddleColumn', JSON.stringify(this.MiddleColumn))
             let count = 0
             for(let i = 0; i < 5; i++){
                 count++
             }
-            if (( ColumnCard.status / count) * 100 >= 100) {
-                eventBus.$emit('addLargeColumn', ColumnCard)
-                ColumnCard.date = new Date().toLocaleString()
+            if (( ColumnWithCards.status / count) * 100 >= 100) {
+                eventBus.$emit('addColumn_3', ColumnWithCards)
+                ColumnWithCards.date = new Date().toLocaleString()
             }
         }
     }
@@ -238,24 +225,24 @@ Vue.component('LargeColumn', {
     template: `
         <section id="main" class="main-alt">
             <div class="column column_three">
-                <div class="Chart" v-for="Chart in LargeColumn">
-                <h3>{{ Chart.name }}</h3>
-                    <div class="tasks" v-for="task in Chart.points"
+                <div class="card" v-for="card in LargeColumn">
+                <h3>{{ card.name }}</h3>
+                    <div class="tasks" v-for="task in card.points"
                         v-if="task.name != null"
-                        @click="TaskCompleted(Chart, task)"
+                        @click="TaskCompleted(card, task)"
                         :class="{completed: task.completed}">
                         {{ task.name }}
                     </div>
-                        <p>{{ Chart.date }}</p>
+                        <p>{{ card.date }} (GMT-7)</p>
                 </div>
             </div>
         </section>
     `,
     props: {
-      LargeColumn: {
+        LargeColumn: {
             type: Array,
         },
-        Chart: {
+        card: {
             type: Object,
         },
     },
