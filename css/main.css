@@ -1,0 +1,75 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background: #206E7A;
+    color: #fcfcfc;
+}
+
+.column {
+    float: left;
+    width: 33.33%;
+    padding: 10px;
+    height: auto;
+    background: #206E7A;
+    text-align: center;
+}
+
+.Texting {
+    font-size: 36px;
+    line-height: 40px;
+    text-align: center;
+    letter-spacing: 3px;
+}
+
+.card {
+    border: 1px solid #000000;
+    margin: 10px;
+    background-color: #2E8581;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.error {
+    background-color: #292832;
+    padding: 20px 30px;
+    color: #2E8581;
+    font-size: 17px;
+    font-weight: bold;
+    line-height: 20px;
+    text-align: center;
+}
+
+.NameForm {
+    margin-bottom: 25px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.sub {
+    display: flex;
+    justify-content: center;
+}
+
+.sub input[type="submit"] {
+    width: 300px;
+    background: #fcfcfc;
+    height: 30px;
+}
+
+.completed{
+    background-color: rgb(16, 121, 63);
+    width: 65%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
