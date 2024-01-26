@@ -1,75 +1,84 @@
+#app {
+    text-align: center;
+}
+
 * {
-    box-sizing: border-box;
+    margin: 0px;
+    padding: 0px;
+    color: white;
 }
-
+input{
+    color: black;
+}
+button{
+    color: black;
+}
 body {
-    background: #206E7A;
-    color: #fcfcfc;
+    font-family: 'Oswald', sans-serif;
+    background-color: #206E7A;
 }
 
-.column {
-    float: left;
-    width: 33.33%;
-    padding: 10px;
-    height: auto;
-    background: #206E7A;
+h2 {
     text-align: center;
 }
+.cill{
+    display: flex;
 
-.Texting {
-    font-size: 36px;
-    line-height: 40px;
-    text-align: center;
-    letter-spacing: 3px;
 }
 
-.card {
-    border: 1px solid #000000;
-    margin: 10px;
-    background-color: #2E8581;
+li {
+    cursor: pointer;
+}
+
+ul {
+    padding-left: 0;
+    list-style-type: none;
+}
+
+#cols {
     display: flex;
     flex-direction: column;
-    align-items: center;
-}
-
-form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.error {
-    background-color: #292832;
-    padding: 20px 30px;
-    color: #2E8581;
-    font-size: 17px;
-    font-weight: bold;
-    line-height: 20px;
-    text-align: center;
-}
-
-.NameForm {
-    margin-bottom: 25px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.sub {
-    display: flex;
     justify-content: center;
 }
 
-.sub input[type="submit"] {
-    width: 300px;
-    background: #fcfcfc;
-    height: 30px;
+.col {
+    color: black;
+    border: 1px solid rgb(0, 0, 0);
+    width: 33%;
 }
 
-.completed{
-    background-color: rgb(16, 121, 63);
-    width: 65%;
+.cards {
+    list-style-type: none;
+    font-size: 14px;
+    width: 96%;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.tasks {
     display: flex;
-    flex-direction: column;
+    list-style-type: disc;
+    margin: 0;
     align-items: center;
 }
+
+.design {
+    max-width: 203px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.completed {
+    background-color: rgb(16, 121, 63);
+}
+
+.error {
+    position: fixed;
+    top: 200px;
+    color: #00ffd0;
+    width: 200px;
+}
+
+
+
+
